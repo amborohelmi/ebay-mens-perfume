@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CEO Brand Strategy Intelligence — eBay Men's Fragrance</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #07090f;
+  --s1: #0d1117;
+  --s2: #111827;
+  --s3: #162032;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.10);
+  --gold: #d4a94b;
+  --gold2: #f0c96b;
+  --blue: #3d8ef0;
+  --blue2: #60a5fa;
+  --green: #34c97a;
+  --green2: #6ee7b7;
+  --red: #ef4444;
+  --red2: #fca5a5;
+  --purple: #a78bfa;
+  --orange: #fb923c;
+  --teal: #2dd4bf;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --muted2: #94a3b8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  line-height:1.6;
+  background-image:
+    radial-gradient(ellipse 100% 40% at 50% 0%,rgba(61,142,240,0.06) 0%,transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(212,169,75,0.04) 0%,transparent 60%);
+}
+
+/* ── TOP NAV ── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:56px;
+  background:rgba(7,9,15,0.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  position:sticky;top:0;z-index:100;
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:700;letter-spacing:0.04em;
+  color:var(--gold);
+}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{
+  padding:6px 14px;border-radius:6px;font-size:11px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;
+  color:var(--muted2);border:none;background:transparent;
+  transition:all 0.2s;
+}
+.nav-tab.active,.nav-tab:hover{background:rgba(61,142,240,0.12);color:var(--blue2)}
+.nav-meta{font-size:10px;color:var(--muted);letter-spacing:0.08em}
+
+/* ── PAGE SECTIONS (tabs) ── */
+.page{display:none;padding:32px 40px 60px;animation:fadeIn 0.35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION TITLE ── */
+.sec-head{margin-bottom:20px}
+.sec-head h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:700;letter-spacing:-0.01em;
+  background:linear-gradient(135deg,var(--text) 40%,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sec-head p{color:var(--muted2);font-size:12px;margin-top:4px}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;gap:14px;margin-bottom:24px}
+.kpi-row.cols-5{grid-template-columns:repeat(5,1fr)}
+.kpi-row.cols-4{grid-template-columns:repeat(4,1fr)}
+.kpi-row.cols-3{grid-template-columns:repeat(3,1fr)}
+
+.kpi{
+  background:var(--s2);border:1px solid var(--border);border-radius:14px;
+  padding:18px 20px;position:relative;overflow:hidden;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.kpi:hover{border-color:rgba(212,169,75,0.2);transform:translateY(-1px)}
+.kpi::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.025) 0%,transparent 50%);
+  pointer-events:none;
+}
+.kpi-tag{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px}
+.kpi-num{
+  font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;
+  line-height:1;margin-bottom:4px;
+}
+.kpi-desc{font-size:11px;color:var(--muted2)}
+.kpi-desc b{font-weight:600}
+.kpi-trend{
+  position:absolute;top:16px;right:16px;
+  font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;
+}
+.up{background:rgba(52,201,122,0.12);color:var(--green)}
+.down{background:rgba(239,68,68,0.12);color:var(--red)}
+.neutral{background:rgba(100,116,139,0.15);color:var(--muted2)}
+
+/* ── GRID LAYOUTS ── */
+.grid{display:grid;gap:18px;margin-bottom:18px}
+.g-2{grid-template-columns:1fr 1fr}
+.g-3{grid-template-columns:1fr 1fr 1fr}
+.g-2-1{grid-template-columns:2fr 1fr}
+.g-1-2{grid-template-columns:1fr 2fr}
+.g-3-2{grid-template-columns:3fr 2fr}
+.g-2-3{grid-template-columns:2fr 3fr}
+.g-full{grid-template-columns:1fr}
+.span2{grid-column:span 2}
+.span3{grid-column:span 3}
+
+/* ── CARD ── */
+.card{
+  background:var(--s2);border:1px solid var(--border);border-radius:18px;
+  padding:22px 24px;display:flex;flex-direction:column;gap:14px;
+  position:relative;overflow:hidden;
+}
+.card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,169,75,0.15),transparent);
+}
+.card-t{font-size:13px;font-weight:700;color:var(--text);letter-spacing:0.01em}
+.card-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.ch{position:relative;flex:1;min-height:0}
+
+/* ── INSIGHT BOX ── */
+.ins{
+  padding:11px 14px;border-radius:0 10px 10px 0;
+  font-size:11.5px;color:#b8c8e0;line-height:1.6;
+  border-left-width:3px;border-left-style:solid;
+}
+.ins-gold{background:rgba(212,169,75,0.06);border-color:var(--gold)}
+.ins-gold b{color:var(--gold)}
+.ins-blue{background:rgba(61,142,240,0.06);border-color:var(--blue)}
+.ins-blue b{color:var(--blue2)}
+.ins-green{background:rgba(52,201,122,0.06);border-color:var(--green)}
+.ins-green b{color:var(--green2)}
+.ins-red{background:rgba(239,68,68,0.06);border-color:var(--red)}
+.ins-red b{color:var(--red2)}
+.ins-purple{background:rgba(167,139,250,0.06);border-color:var(--purple)}
+.ins-purple b{color:var(--purple)}
+.ins-teal{background:rgba(45,212,191,0.06);border-color:var(--teal)}
+.ins-teal b{color:var(--teal)}
+
+/* ── STRATEGIC ALERT ── */
+.alert-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.alert{
+  border-radius:14px;padding:18px 20px;border:1px solid;
+  display:flex;flex-direction:column;gap:8px;
+}
+.alert-icon{font-size:20px}
+.alert-title{font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase}
+.alert-body{font-size:11.5px;line-height:1.55;color:var(--muted2)}
+.alert-body b{font-weight:600}
+.alert-green{background:rgba(52,201,122,0.06);border-color:rgba(52,201,122,0.2)}
+.alert-green .alert-title{color:var(--green)}
+.alert-amber{background:rgba(251,146,60,0.06);border-color:rgba(251,146,60,0.2)}
+.alert-amber .alert-title{color:var(--orange)}
+.alert-red{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.2)}
+.alert-red .alert-title{color:var(--red)}
+
+/* ── SCORECARD TABLE ── */
+.sc-table{width:100%;border-collapse:collapse}
+.sc-table thead tr{border-bottom:1px solid var(--border2)}
+.sc-table th{
+  font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--muted);padding:8px 10px;text-align:left;
+}
+.sc-table td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
+.sc-table tr:last-child td{border-bottom:none}
+.sc-table tr:hover td{background:rgba(255,255,255,0.02)}
+.sc-bar-wrap{width:60px;height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle}
+.sc-bar{height:100%;border-radius:3px}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:0.04em}
+.tag-v{background:rgba(52,201,122,0.12);color:var(--green)}
+.tag-p{background:rgba(212,169,75,0.12);color:var(--gold)}
+.tag-n{background:rgba(100,116,139,0.12);color:var(--muted2)}
+.tag-w{background:rgba(239,68,68,0.12);color:var(--red2)}
+.tag-s{background:rgba(61,142,240,0.12);color:var(--blue2)}
+
+/* ── QUADRANT CHART ── */
+.quadrant-wrap{position:relative;width:100%;padding-top:100%;max-height:360px}
+.quadrant-wrap canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+
+/* ── RANKING BARS ── */
+.rank-list{display:flex;flex-direction:column;gap:8px}
+.rank-item{display:flex;align-items:center;gap:10px}
+.rank-n{
+  width:20px;height:20px;border-radius:5px;font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:rgba(212,169,75,0.1);color:var(--gold);
+}
+.rank-label{flex:1;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-bar-w{width:90px;height:5px;background:var(--border2);border-radius:3px;overflow:hidden;flex-shrink:0}
+.rank-bar-f{height:100%;border-radius:3px}
+.rank-val{width:60px;text-align:right;font-size:11px;color:var(--muted2);flex-shrink:0}
+
+/* ── BULLET METRIC ── */
+.bullet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bullet{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.bullet-val{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;line-height:1}
+.bullet-lbl{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px}
+
+/* ── OPPORTUNITY CARD ── */
+.opp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.opp-card{
+  background:var(--s3);border:1px solid var(--border);border-radius:12px;
+  padding:16px;display:flex;flex-direction:column;gap:8px;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.opp-card:hover{border-color:rgba(52,201,122,0.25);transform:translateY(-2px)}
+.opp-header{display:flex;justify-content:space-between;align-items:flex-start}
+.opp-brand{font-size:13px;font-weight:700}
+.opp-pill{padding:3px 8px;border-radius:8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.opp-stats{display:flex;gap:14px}
+.opp-stat .v{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700}
+.opp-stat .l{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+.opp-why{font-size:11px;color:var(--muted2);line-height:1.5}
+
+/* ── HEATMAP ── */
+.hmap{display:grid;gap:3px}
+.hmap-cell{
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:600;cursor:default;
+  transition:opacity 0.15s;
+}
+.hmap-cell:hover{opacity:0.75}
+.hmap-col-labels,.hmap-row-labels{font-size:9px;color:var(--muted)}
+
+/* ── DIVIDER ── */
+.divider{
+  display:flex;align-items:center;gap:12px;
+  font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--muted);margin:4px 0 16px;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── RECOMMENDATION BLOCK ── */
+.rec{
+  background:linear-gradient(135deg,rgba(212,169,75,0.06) 0%,rgba(61,142,240,0.04) 100%);
+  border:1px solid rgba(212,169,75,0.15);
+  border-radius:16px;padding:24px;
+}
+.rec h3{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;
+  color:var(--gold2);margin-bottom:16px;
+}
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rec-item{
+  background:rgba(0,0,0,0.25);border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+}
+.rec-item .num{
+  font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;
+  color:rgba(212,169,75,0.3);line-height:1;margin-bottom:8px;
+}
+.rec-item h4{font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px}
+.rec-item p{font-size:11.5px;color:var(--muted2);line-height:1.55}
+.rec-item p b{color:var(--gold2);font-weight:600}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
+
+@media(max-width:860px){
+  .g-2,.g-3,.g-2-1,.g-1-2,.g-3-2,.g-2-3{grid-template-columns:1fr}
+  .kpi-row.cols-5,.kpi-row.cols-4{grid-template-columns:repeat(2,1fr)}
+  .page{padding:20px 16px}
+  nav{padding:0 16px}
+  .opp-grid,.alert-row,.rec-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-brand">⬡ Fragrance Intelligence™</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('exec')">Executive Summary</button>
+    <button class="nav-tab" onclick="showPage('brands')">Brand Strategy</button>
+    <button class="nav-tab" onclick="showPage('market')">Market Structure</button>
+    <button class="nav-tab" onclick="showPage('opps')">Opportunities</button>
+  </div>
+  <div class="nav-meta">eBay · Men's Fragrance · May 2024 · N=1,000</div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1 — EXECUTIVE SUMMARY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-exec">
+  <div class="sec-head">
+    <h2>Executive Summary</h2>
+    <p>Board-level market intelligence for strategic decision-making — eBay men's fragrance ecosystem</p>
+  </div>
+
+  <!-- Strategic Alerts -->
+  <div class="alert-row">
+    <div class="alert alert-green">
+      <div class="alert-icon">🚀</div>
+      <div class="alert-title">Volume Opportunity</div>
+      <div class="alert-body"><b>Davidoff, Versace & Calvin Klein</b> prove that $22–$35 EDT listings can generate 5,000–7,800 avg units sold. The volume ceiling is far higher than current median (50 units) suggests — most brands are leaving sales on the table.</div>
+    </div>
+    <div class="alert alert-amber">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-title">Concentration Risk</div>
+      <div class="alert-body"><b>New Jersey (3 sellers)</b> account for $16.4M of $25.8M total revenue (63.5%). This extreme concentration means the market is dominated by a handful of professional wholesale operations, not organic retail.</div>
+    </div>
+    <div class="alert alert-red">
+      <div class="alert-icon">📉</div>
+      <div class="alert-title">Premium Trap</div>
+      <div class="alert-body"><b>Giorgio Armani</b> holds 60 listings (market leader) but generates only $536K revenue — 15× less than Versace with 20 listings. High listing count + premium pricing ($57 avg) + low velocity (173 avg sold) = capital tied up, low ROI.</div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row cols-5">
+    <div class="kpi">
+      <div class="kpi-tag">Total Market Size</div>
+      <div class="kpi-num" style="color:var(--gold)">$25.8M</div>
+      <div class="kpi-desc">Est. revenue across 1,000 listings</div>
+      <span class="kpi-trend neutral">Snapshot</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">Value Tier Dominance</div>
+      <div class="kpi-num" style="color:var(--blue2)">53.6%</div>
+      <div class="kpi-desc">$25–$50 tier = <b>$13.8M</b> of revenue</div>
+      <span class="kpi-trend up">↑ Core</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">Top 3 Brand Revenue Share</div>
+      <div class="kpi-num" style="color:var(--green)">30.1%</div>
+      <div class="kpi-desc">Versace + CK + Azzaro = $7.7M</div>
+      <span class="kpi-trend neutral">HHI Moderate</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">Sell-through Rate</div>
+      <div class="kpi-num" style="color:var(--purple)">97.8%</div>
+      <div class="kpi-desc">Avg across all price tiers</div>
+      <span class="kpi-trend up">↑ Healthy</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">Tester Premium</div>
+      <div class="kpi-num" style="color:var(--teal)">2,159</div>
+      <div class="kpi-desc">Avg sold for "tester" listings — <b>4.6× market avg</b></div>
+      <span class="kpi-trend up">↑ Signal</span>
+    </div>
+  </div>
+
+  <!-- Revenue waterfall + market share -->
+  <div class="grid g-2">
+    <div class="card">
+      <div><div class="card-t">Revenue by Price Tier — Waterfall</div><div class="card-sub">Which tier generates the most money?</div></div>
+      <div class="ch" style="height:230px"><canvas id="waterfallChart"></canvas></div>
+      <div class="ins ins-blue"><b>Value tier ($25–$50) is the revenue engine</b> at $13.8M (53.6%) despite just 40.2% of listings. Budget listings generate strong revenue through volume. Luxury ($120+) is the weakest tier: 46 listings, only $598K — avg sell-through drops to 92.5%, the lowest of all tiers. <b>CEO implication: prioritize Value tier SKUs for maximum ROI.</b></div>
+    </div>
+    <div class="card">
+      <div><div class="card-t">Brand Revenue Market Share — Top 10</div><div class="card-sub">Concentration & competitive landscape</div></div>
+      <div class="ch" style="height:230px"><canvas id="mktShareChart"></canvas></div>
+      <div class="ins ins-gold"><b>Versace alone holds 13.7% market share</b> — extraordinary for just 20 listings. The top 5 brands = 39.1% of revenue. The long tail (236 brands) splits the remaining 60.9%, creating fierce competition in the mid-market. <b>Strategy: attack the top 5's volume formula, not their brand names.</b></div>
+    </div>
+  </div>
+
+  <!-- Sell-through heatmap -->
+  <div class="card">
+    <div><div class="card-t">Sell-through Rate × Price Tier × Fragrance Type</div><div class="card-sub">Demand intensity matrix — where does inventory move fastest?</div></div>
+    <div id="heatmapContainer" style="overflow-x:auto;padding:4px 0"></div>
+    <div class="ins ins-green"><b>Budget EDT ($&lt;25) and Value EDT ($25–50) are the fastest-moving segments</b> — avg 1,269 and 1,460 units sold respectively. EDP listings in the Value tier (106 listings, avg 234 units sold) are notably underperforming vs EDT in same price range. <b>Takeaway: EDT in the $25–50 range = best risk-adjusted volume play.</b></div>
+  </div>
+
+  <!-- CEO Recommendations -->
+  <div class="rec">
+    <h3>⚑ CEO Strategic Priorities — 3 Immediate Actions</h3>
+    <div class="rec-grid">
+      <div class="rec-item">
+        <div class="num">01</div>
+        <h4>Double Down on Value-EDT</h4>
+        <p>Concentrate inventory in the <b>$25–$50 Eau de Toilette</b> segment. It holds 240 listings generating $13.8M. The avg sold of 1,460 units at $36 avg price = a predictable, high-velocity formula. Target brands: Calvin Klein, Davidoff, Azzaro, Burberry.</p>
+      </div>
+      <div class="rec-item">
+        <div class="num">02</div>
+        <h4>Tester Strategy Arbitrage</h4>
+        <p>Listings with "tester" in title average <b>2,159 units sold</b> — 4.6× the market average of 766. Testers are priced ~15–20% below retail but convert massively. For fragrance-agnostic buyers, <b>tester listings = highest ROI channel</b> with minimal additional cost.</p>
+      </div>
+      <div class="rec-item">
+        <div class="num">03</div>
+        <h4>Geographic Diversification</h4>
+        <p>New Jersey holds 63% of revenue from just ~18% of listings — a <b>wholesale hub signal</b>. If competing, you must match NJ sellers' scale and pricing. Alternatively, <b>underserved states (California, Florida)</b> have high listing counts but disproportionately low revenue — premium opportunity in neglected markets.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2 — BRAND STRATEGY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-brands">
+  <div class="sec-head">
+    <h2>Brand Strategy Analysis</h2>
+    <p>Competitive positioning, velocity scoring, and brand quadrant analysis</p>
+  </div>
+
+  <!-- Quadrant + Scorecard -->
+  <div class="grid g-2-3">
+    <div class="card">
+      <div><div class="card-t">Brand Quadrant — Price vs Volume</div><div class="card-sub">Strategic positioning map</div></div>
+      <div class="ch" style="height:320px"><canvas id="quadrantChart"></canvas></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px;font-size:10px">
+        <div style="padding:6px 10px;background:rgba(52,201,122,0.07);border-radius:8px;border-left:2px solid var(--green)"><b style="color:var(--green)">STARS</b> — High Price + High Vol<br><span style="color:var(--muted2)">Azzaro, Paco Rabanne, YSL</span></div>
+        <div style="padding:6px 10px;background:rgba(61,142,240,0.07);border-radius:8px;border-left:2px solid var(--blue)"><b style="color:var(--blue2)">VOLUME KINGS</b> — Low Price + High Vol<br><span style="color:var(--muted2)">Versace, Calvin Klein, Davidoff</span></div>
+        <div style="padding:6px 10px;background:rgba(212,169,75,0.07);border-radius:8px;border-left:2px solid var(--gold)"><b style="color:var(--gold)">PREMIUM NICHE</b> — High Price + Low Vol<br><span style="color:var(--muted2)">Creed, Giorgio Armani, Dior</span></div>
+        <div style="padding:6px 10px;background:rgba(239,68,68,0.07);border-radius:8px;border-left:2px solid var(--red)"><b style="color:var(--red2)">DANGER ZONE</b> — Low Price + Low Vol<br><span style="color:var(--muted2)">Risk of margin + volume squeeze</span></div>
+      </div>
+      <div class="ins ins-gold"><b>The ideal brand position is the top-left (Stars):</b> premium price + high volume. Azzaro is the standout — $42 avg price with 2,554 avg sold. Most brands cluster in bottom quadrants, unable to command both price and volume simultaneously.</div>
+    </div>
+
+    <div class="card">
+      <div><div class="card-t">Brand Scorecard — Top 15 by Revenue</div><div class="card-sub">Velocity · Efficiency · Market Share · Strategic Role</div></div>
+      <div style="overflow-x:auto">
+        <table class="sc-table" id="scorecardTable"></table>
+      </div>
+      <div class="ins ins-purple"><b>Efficiency Score</b> = revenue per listing normalized. <b>Davidoff scores 100</b> — $224K per listing with just 7 listings. <b>Velocity Score</b> = avg sold normalized. <b>Calvin Klein leads at 73.1</b> (5,740 avg units). Giorgio Armani's 2.2 velocity despite 60 listings is a <b>red flag</b> — high inventory, low conversion.</div>
+    </div>
+  </div>
+
+  <!-- Brand dual comparison -->
+  <div class="card">
+    <div><div class="card-t">Strategic Brand Comparison — Avg Price vs Avg Sold vs Revenue</div><div class="card-sub">Three dimensions of brand performance — bubble size = total estimated revenue</div></div>
+    <div class="ch" style="height:300px"><canvas id="bubbleChart"></canvas></div>
+    <div class="ins ins-teal"><b>Three distinct archetypes visible:</b> (1) <b>Volume Dominators</b> — Davidoff, Calvin Klein, Versace at low price + massive volume. (2) <b>Balanced Performers</b> — Azzaro, Montblanc, Burberry achieving both reasonable price and solid volume. (3) <b>Prestige Anchors</b> — Creed, Prada, YSL at high price but limited volume — important for brand halo but not revenue drivers. <b>The largest revenue bubbles all cluster in the $25–$45 price, 500+ sold zone.</b></div>
+  </div>
+
+  <!-- Brand price range -->
+  <div class="grid g-2">
+    <div class="card">
+      <div><div class="card-t">Brand Price Range — Width of Portfolio</div><div class="card-sub">Price flexibility signals multi-tier strategy</div></div>
+      <div class="ch" style="height:250px"><canvas id="priceRangeChart"></canvas></div>
+      <div class="ins ins-gold"><b>Creed ($9.96–$259) and YSL ($9.89–$179)</b> have the widest price ranges, suggesting strong portfolio depth from entry to ultra-premium. <b>Dolce&Gabbana ($18.89–$239.99)</b> also spans broad tiers. <b>Calvin Klein's tight $17.99–$40.60 range</b> shows pure mass-market focus with no premium tier exposure.</div>
+    </div>
+    <div class="card">
+      <div><div class="card-t">Revenue per Listing — Capital Efficiency</div><div class="card-sub">Which brand generates the most revenue per SKU listed?</div></div>
+      <div class="ch" style="height:250px"><canvas id="revPerListingChart"></canvas></div>
+      <div class="ins ins-green"><b>Davidoff ($224K/listing) and Versace ($177K/listing)</b> are the most capital-efficient brands — generating massive revenue with minimal SKU exposure. This points to <b>single-product domination strategy</b> (Cool Water, Eros). In contrast, Armani at $8.9K/listing despite 60 listings shows a long-tail, low-efficiency approach.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3 — MARKET STRUCTURE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-market">
+  <div class="sec-head">
+    <h2>Market Structure Deep Dive</h2>
+    <p>Price elasticity, competition density, geographic analysis, and listing intelligence</p>
+  </div>
+
+  <div class="kpi-row cols-4">
+    <div class="kpi">
+      <div class="kpi-tag">Value Tier Competition</div>
+      <div class="kpi-num" style="color:var(--blue2)">124</div>
+      <div class="kpi-desc">Brands compete in $25–$50 tier — <b>highest density</b></div>
+      <span class="kpi-trend down">↑ Crowded</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">Luxury Tier Brands</div>
+      <div class="kpi-num" style="color:var(--gold)">29</div>
+      <div class="kpi-desc">Only 29 brands above $120 — <b>thin but low competition</b></div>
+      <span class="kpi-trend up">↑ Clear</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">3.4oz Listing Premium</div>
+      <div class="kpi-num" style="color:var(--green)">1,197</div>
+      <div class="kpi-desc">Avg sold for 3.4oz listings — <b>top size signal</b></div>
+      <span class="kpi-trend up">↑ Winner</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-tag">NJ Revenue Dominance</div>
+      <div class="kpi-num" style="color:var(--red2)">63.5%</div>
+      <div class="kpi-desc">New Jersey share of all US est. revenue</div>
+      <span class="kpi-trend down">↑ Risk</span>
+    </div>
+  </div>
+
+  <!-- Competition density + price elasticity -->
+  <div class="grid g-2">
+    <div class="card">
+      <div><div class="card-t">Competition Density by Price Tier</div><div class="card-sub">Brands, listings, and avg sold per tier</div></div>
+      <div class="ch" style="height:220px"><canvas id="densityChart"></canvas></div>
+      <div class="ins ins-blue"><b>Value tier ($25–$50) is the most contested</b> — 124 brands, 402 listings, 3.24 listings per brand. Yet it remains the highest revenue tier ($13.8M) because avg sold (991) is strong. <b>Mid tier ($50–$80) has attractive characteristics</b>: 72 brands, $4.9M revenue, but avg sold drops to 470 — signaling price sensitivity begins here.</div>
+    </div>
+    <div class="card">
+      <div><div class="card-t">Avg Units Sold by Price × Fragrance Type</div><div class="card-sub">Price-volume interaction — demand elasticity matrix</div></div>
+      <div class="ch" style="height:220px"><canvas id="elasticityChart"></canvas></div>
+      <div class="ins ins-purple"><b>Budget EDT is a sleeper hit</b>: avg 1,269 sold at under $25. Value EDT leads overall at 1,460 units. <b>EDP has flat demand across $25–$80</b> (194–234 units), suggesting it's bought regardless of moderate price differences. Cologne demand collapses above $25 — it's a pure budget category. <b>Premium EDP ($80–120) still sells 183 avg units — a viable niche.</b></div>
+    </div>
+  </div>
+
+  <!-- Geographic + keyword -->
+  <div class="grid g-2">
+    <div class="card">
+      <div><div class="card-t">Geographic Revenue vs Listing Imbalance</div><div class="card-sub">States where revenue significantly outpaces listing count</div></div>
+      <div class="ch" style="height:250px"><canvas id="geoImbalanceChart"></canvas></div>
+      <div class="ins ins-teal"><b>New Jersey's revenue/listing ratio is $91K</b> — 8.9× the national average of $10.2K. Texas has 220 listings but only $33K/listing average. <b>Michigan ($6.3K/listing) and California ($2.4K/listing) are underperformers</b> — many listings, poor conversion or pricing. Strategy: study NJ sellers' price, size, and brand strategy and replicate in under-optimized states.</div>
+    </div>
+    <div class="card">
+      <div><div class="card-t">Listing Keyword Intelligence</div><div class="card-sub">Title keywords that drive highest average units sold</div></div>
+      <div class="ch" style="height:250px"><canvas id="keywordChart"></canvas></div>
+      <div class="ins ins-red"><b>"Tester" = 2,159 avg sold</b> — the single highest-converting keyword by 2×. "New" (591 listings) drives 1,095 avg sold. Surprisingly, <b>"mini" (1,113) and "gift" (718) outperform "sealed" (141)</b> — suggesting buyers value format/novelty over condition signals. <b>"100ml" (87 avg) and "50ml" (98 avg) severely underperform</b> vs oz-labeled listings — use oz, not ml.</div>
+    </div>
+  </div>
+
+  <!-- Top listings table -->
+  <div class="card">
+    <div><div class="card-t">Top 10 Individual Listings by Estimated Revenue</div><div class="card-sub">The exact products dominating eBay men's fragrance revenue</div></div>
+    <table class="sc-table" id="topListingsTable"></table>
+    <div class="ins ins-gold"><b>All top 10 listings are EDT, all priced $23–$51, and 9 of 10 are located in New Jersey.</b> The winning formula: Eau de Toilette · 3.4–6.7oz · "New In Box" or "Tester" · major heritage brand · NJ seller hub. Calvin Klein CK One (#2, $1.29M) is a unisex crossover product capturing both male and female demand — a unique volume lever not available to most men's-only SKUs.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4 — OPPORTUNITIES -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-opps">
+  <div class="sec-head">
+    <h2>Growth Opportunities & Strategic Gaps</h2>
+    <p>Underpenetrated brands, white spaces, and high-ROI plays for immediate action</p>
+  </div>
+
+  <div class="divider">Hidden Champions — High Velocity, Low Listing Count</div>
+
+  <div class="opp-grid">
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-brand">Davidoff</div>
+        <span class="opp-pill" style="background:rgba(52,201,122,0.12);color:var(--green)">🔥 Top Opportunity</span>
+      </div>
+      <div class="opp-stats">
+        <div class="opp-stat"><div class="v" style="color:var(--green)">7,849</div><div class="l">Avg Sold</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--gold)">$26.83</div><div class="l">Avg Price</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--blue2)">7</div><div class="l">Listings</div></div>
+      </div>
+      <div class="opp-why">Only 7 listings but highest avg sold in the dataset. Cool Water dominance. <b>Massively underrepresented</b> — adding 10 more listings at this velocity = potential $2.2M incremental revenue.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-brand">Kenneth Cole</div>
+        <span class="opp-pill" style="background:rgba(61,142,240,0.12);color:var(--blue2)">📈 Scale Up</span>
+      </div>
+      <div class="opp-stats">
+        <div class="opp-stat"><div class="v" style="color:var(--green)">3,388</div><div class="l">Avg Sold</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--gold)">$22.22</div><div class="l">Avg Price</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--blue2)">7</div><div class="l">Listings</div></div>
+      </div>
+      <div class="opp-why">Budget-tier powerhouse. 7 listings generating $577K. Under-the-radar brand with proven demand. Low price = low barrier to entry for new sellers in this space.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-brand">Liz Claiborne</div>
+        <span class="opp-pill" style="background:rgba(251,146,60,0.12);color:var(--orange)">🎯 Underrated</span>
+      </div>
+      <div class="opp-stats">
+        <div class="opp-stat"><div class="v" style="color:var(--green)">3,049</div><div class="l">Avg Sold</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--gold)">$21.19</div><div class="l">Avg Price</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--blue2)">7</div><div class="l">Listings</div></div>
+      </div>
+      <div class="opp-why">Legacy brand with cult following at budget price. 3,049 avg sold on just 7 listings = $487K. Strong median sold (1,370) confirms consistent demand, not just outlier-driven.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-brand">Montblanc</div>
+        <span class="opp-pill" style="background:rgba(212,169,75,0.12);color:var(--gold)">⭐ Premium Vol</span>
+      </div>
+      <div class="opp-stats">
+        <div class="opp-stat"><div class="v" style="color:var(--green)">2,159</div><div class="l">Avg Sold</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--gold)">$42.94</div><div class="l">Avg Price</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--blue2)">6</div><div class="l">Listings</div></div>
+      </div>
+      <div class="opp-why">Rare combination: above-median price ($43) with extremely high volume (2,159). Only 6 listings generating $545K. Strong median sold (1,187) = consistent, not skewed. <b>Best risk-adjusted opportunity</b>.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-brand">HUGO BOSS</div>
+        <span class="opp-pill" style="background:rgba(45,212,191,0.12);color:var(--teal)">💡 Expand</span>
+      </div>
+      <div class="opp-stats">
+        <div class="opp-stat"><div class="v" style="color:var(--green)">1,948</div><div class="l">Avg Sold</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--gold)">$42.78</div><div class="l">Avg Price</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--blue2)">5</div><div class="l">Listings</div></div>
+      </div>
+      <div class="opp-why">Premium brand recognition at mid-market price. 5 listings = $479K. Hugo 6.7oz alone generates $381K. A brand with global recognition and eBay buyers actively seeking it out.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-brand">Gucci</div>
+        <span class="opp-pill" style="background:rgba(167,139,250,0.12);color:var(--purple)">👜 Prestige Vol</span>
+      </div>
+      <div class="opp-stats">
+        <div class="opp-stat"><div class="v" style="color:var(--green)">675</div><div class="l">Avg Sold</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--gold)">$56.88</div><div class="l">Avg Price</div></div>
+        <div class="opp-stat"><div class="v" style="color:var(--blue2)">9</div><div class="l">Listings</div></div>
+      </div>
+      <div class="opp-why">High-price brand ($57 avg) achieving above-median volume (675 sold). Strong brand equity reduces price resistance. Only 9 listings — significant expansion headroom at premium margins.</div>
+    </div>
+  </div>
+
+  <div class="divider">White Space — Premium Brands with Proven Volume</div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div><div class="card-t">Stars Quadrant — Premium Price + High Volume</div><div class="card-sub">Brands that beat gravity: expensive AND popular</div></div>
+      <div class="ch" style="height:240px"><canvas id="starsChart"></canvas></div>
+      <div class="ins ins-green"><b>Carolina Herrera is the hidden star</b>: $56 avg price, 705 avg sold, $574K total — yet only 15 listings. Carolina Herrera and Gucci both demonstrate that <b>premium pricing does not have to sacrifice volume</b>. These brands have aspirational appeal that converts on eBay despite higher prices. Expanding SKU depth for these brands = high-margin growth.</div>
+    </div>
+    <div class="card">
+      <div><div class="card-t">Opportunity Scoring Matrix</div><div class="card-sub">Combined velocity + efficiency + underrepresentation score</div></div>
+      <div class="ch" style="height:240px"><canvas id="oppScoreChart"></canvas></div>
+      <div class="ins ins-teal"><b>Top 5 opportunity brands by composite score:</b> Davidoff (86/100), Calvin Klein (79/100), Versace (76/100), Azzaro (65/100), Montblanc (57/100). The score blends velocity (avg sold), efficiency (revenue/listing), and expansion headroom (inverse of listing count). <b>Davidoff is the single highest-priority brand to expand immediately.</b></div>
+    </div>
+  </div>
+
+  <!-- Final recommendations -->
+  <div class="rec">
+    <h3>⚑ Brand Portfolio Recommendations for the CEO</h3>
+    <div class="rec-grid">
+      <div class="rec-item">
+        <div class="num">A</div>
+        <h4>Invest: Volume-Value Play</h4>
+        <p>Build depth in <b>Davidoff, Calvin Klein, Versace, Azzaro</b>. These brands have proven they can sell 2,500–7,800 units at $23–$43 price points. Focus on 3.4oz and 6.7oz tester + new-in-box listings. <b>Target: $5M revenue from these 4 brands alone</b> with 40–50 total listings.</p>
+      </div>
+      <div class="rec-item">
+        <div class="num">B</div>
+        <h4>Grow: Premium-Volume Hybrids</h4>
+        <p>Expand <b>Montblanc, HUGO BOSS, Carolina Herrera, Gucci</b> — all achieve above-median volume at above-median price. These are <b>margin enhancers</b>. Add 5–10 targeted SKUs per brand, focusing on their signature hero products. Expected revenue uplift: +$1.2M per quarter.</p>
+      </div>
+      <div class="rec-item">
+        <div class="num">C</div>
+        <h4>Defend: Listing Optimization</h4>
+        <p>Audit current <b>Giorgio Armani, Paco Rabanne, Ralph Lauren</b> listings — high listing count, low velocity. Consider: (1) repricing to $30–$40 range for volume recovery, (2) converting to tester listings (+4.6× avg sold), (3) consolidating SKUs to the <b>3.4oz "New in Box" format</b> — the single highest-volume listing template.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ─── TAB NAVIGATION ─────────────────────────────────── */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  event.target.classList.add('active');
+  // Lazy render charts
+  if(id==='brands' && !brandsRendered) renderBrandCharts();
+  if(id==='market' && !marketRendered) renderMarketCharts();
+  if(id==='opps' && !oppsRendered) renderOppsCharts();
+}
+let brandsRendered=false,marketRendered=false,oppsRendered=false;
+
+/* ─── SHARED CONFIG ──────────────────────────────────── */
+Chart.defaults.color='#64748b';
+Chart.defaults.font.family='Syne';
+const BG='#111827';
+const C={gold:'#d4a94b',gold2:'#f0c96b',blue:'#3d8ef0',blue2:'#60a5fa',green:'#34c97a',green2:'#6ee7b7',red:'#ef4444',purple:'#a78bfa',orange:'#fb923c',teal:'#2dd4bf',muted:'#334155'};
+const PAL=[C.blue,C.gold,C.green,C.purple,C.red,C.teal,C.orange,'#ec4899','#84cc16','#06b6d4'];
+const GRID={color:'rgba(255,255,255,0.04)',drawBorder:false};
+
+function a(hex,op){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${op})`}
+
+/* ─── PAGE 1 CHARTS ──────────────────────────────────── */
+
+// Waterfall Revenue by Tier
+new Chart(document.getElementById('waterfallChart'),{
+  type:'bar',
+  data:{
+    labels:['Budget\n<$25','Value\n$25-50','Mid\n$50-80','Premium\n$80-120','Luxury\n$120+'],
+    datasets:[{
+      data:[4873153,13824184,4901138,1612248,598483],
+      backgroundColor:[a(C.teal,0.7),a(C.blue,0.85),a(C.gold,0.75),a(C.purple,0.7),a(C.red,0.6)],
+      borderRadius:8,borderSkipped:false,
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>`  $${(ctx.raw/1e6).toFixed(2)}M`}}
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{font:{size:10}}},
+      y:{grid:GRID,ticks:{callback:v=>'$'+(v/1e6).toFixed(0)+'M'}}
+    }
+  }
+});
+
+// Market share donut
+const msLabels=['Versace','Calvin Klein','Azzaro','Davidoff','Paco Rabanne','YSL','Armaf','Ralph Lauren','D&G','Kenneth Cole','Others'];
+const msVals=[13.73,9.66,6.48,6.09,3.77,3.60,3.39,2.92,2.56,2.24,45.56];
+new Chart(document.getElementById('mktShareChart'),{
+  type:'doughnut',
+  data:{
+    labels:msLabels,
+    datasets:[{
+      data:msVals,
+      backgroundColor:[...PAL.map(c=>a(c,0.85)),a(C.muted,0.5)],
+      borderColor:BG,borderWidth:2,hoverOffset:6,
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,cutout:'60%',
+    plugins:{
+      legend:{position:'right',labels:{font:{size:9.5},padding:6,boxWidth:10,boxHeight:10}},
+      tooltip:{callbacks:{label:ctx=>`  ${ctx.label}: ${ctx.raw}%`}}
+    }
+  }
+});
+
+// Sell-through heatmap (inline HTML)
+(()=>{
+  const types=['Eau de Toilette','Eau de Parfum','Eau de Cologne','Other'];
+  const tiers=['Budget(<$25)','Value($25-50)','Mid($50-80)','Premium($80-120)','Luxury($120+)'];
+  const vals={
+    'Budget(<$25)': [1269,148,893,1797],
+    'Value($25-50)': [1460,234,583,122],
+    'Mid($50-80)': [858,195,148,61],
+    'Premium($80-120)': [307,183,45,30],
+    'Luxury($120+)': [51,90,14,17],
+  };
+  const allVals=Object.values(vals).flat();
+  const maxV=Math.max(...allVals);
+  const minV=Math.min(...allVals);
+  function cellColor(v){
+    const t=(v-minV)/(maxV-minV);
+    const r=Math.round(61+(45-61)*t+t*(212-45));
+    const g=Math.round(142+(159-142)*t+t*(169-159));
+    const b=Math.round(240+(201-240)*t+t*(75-201));
+    return `rgba(${r},${g},${b},${0.3+t*0.6})`;
+  }
+  let html='<div style="overflow-x:auto"><table style="border-collapse:separate;border-spacing:4px;min-width:500px">';
+  html+='<tr><th style="font-size:9px;color:#64748b;padding:4px 8px;text-align:left">Tier / Type</th>';
+  types.forEach(t=>{html+=`<th style="font-size:9px;color:#94a3b8;padding:4px 8px;text-align:center;white-space:nowrap">${t}</th>`});
+  html+='</tr>';
+  tiers.forEach((tier,ti)=>{
+    html+=`<tr><td style="font-size:10px;color:#94a3b8;padding:4px 8px;white-space:nowrap">${tier}</td>`;
+    vals[tier].forEach((v,ci)=>{
+      const bg=cellColor(v);
+      const textC=v>800?'#e2e8f0':'#94a3b8';
+      html+=`<td style="background:${bg};border-radius:8px;padding:10px 14px;text-align:center;font-size:12px;font-weight:700;color:${textC};min-width:90px">${v.toLocaleString()}</td>`;
+    });
+    html+='</tr>';
+  });
+  html+='<tr><td colspan="5" style="font-size:9px;color:#475569;padding:8px 8px 0;font-style:italic">Values = average units sold per listing</td></tr>';
+  html+='</table></div>';
+  document.getElementById('heatmapContainer').innerHTML=html;
+})();
+
+/* ─── PAGE 2 CHARTS ──────────────────────────────────── */
+function renderBrandCharts(){
+  brandsRendered=true;
+
+  // Quadrant scatter
+  const brands=[
+    {n:'Versace',p:34.8,s:4826,r:3.54,q:'vol'},
+    {n:'Calvin Klein',p:25.7,s:5740,r:2.49,q:'vol'},
+    {n:'Azzaro',p:42.8,s:2554,r:1.67,q:'star'},
+    {n:'Davidoff',p:26.8,s:7849,r:1.57,q:'vol'},
+    {n:'Paco Rabanne',p:58.6,s:480,r:0.97,q:'star'},
+    {n:'YSL',p:69.1,s:410,r:0.93,q:'star'},
+    {n:'Armaf',p:40.0,s:714,r:0.88,q:'vol'},
+    {n:'Ralph Lauren',p:37.8,s:409,r:0.75,q:'vol'},
+    {n:'D&G',p:60.3,s:386,r:0.66,q:'star'},
+    {n:'Kenneth Cole',p:22.2,s:3388,r:0.58,q:'vol'},
+    {n:'Burberry',p:39.8,s:1607,r:0.57,q:'vol'},
+    {n:'Carolina Herrera',p:56.3,s:705,r:0.57,q:'star'},
+    {n:'Montblanc',p:42.9,s:2159,r:0.55,q:'star'},
+    {n:'Armani',p:56.9,s:173,r:0.54,q:'prem'},
+    {n:'HUGO BOSS',p:42.8,s:1948,r:0.48,q:'star'},
+    {n:'Creed',p:93.1,s:221,r:0.32,q:'prem'},
+    {n:'Dior',p:79.3,s:275,r:0.19,q:'prem'},
+    {n:'Gucci',p:56.9,s:675,r:0.35,q:'star'},
+  ];
+  const qColor={vol:C.blue,star:C.green,prem:C.gold,dng:C.red};
+  new Chart(document.getElementById('quadrantChart'),{
+    type:'scatter',
+    data:{
+      datasets:brands.map(b=>({
+        label:b.n,
+        data:[{x:b.p,y:b.s}],
+        backgroundColor:a(qColor[b.q],0.75),
+        borderColor:qColor[b.q],
+        borderWidth:1.5,
+        pointRadius:Math.max(6,b.r*12),
+        pointHoverRadius:Math.max(8,b.r*14),
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`  ${ctx.dataset.label}: $${ctx.parsed.x.toFixed(0)} · ${ctx.parsed.y.toLocaleString()} sold`}}
+      },
+      scales:{
+        x:{grid:GRID,title:{display:true,text:'Avg Price (USD)',font:{size:10}},ticks:{callback:v=>'$'+v}},
+        y:{grid:GRID,title:{display:true,text:'Avg Units Sold',font:{size:10}},ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}}
+      },
+      annotation:{
+        annotations:{
+          vl:{type:'line',xMin:41.25,xMax:41.25,yMin:0,yMax:8000,borderColor:'rgba(255,255,255,0.08)',borderWidth:1,borderDash:[4,4]},
+          hl:{type:'line',yMin:301,yMax:301,xMin:0,xMax:120,borderColor:'rgba(255,255,255,0.08)',borderWidth:1,borderDash:[4,4]},
+        }
+      }
+    },
+    plugins:[{
+      id:'quad-labels',
+      afterDraw(chart){
+        const ctx=chart.ctx;
+        chart.data.datasets.forEach((ds,i)=>{
+          const meta=chart.getDatasetMeta(i);
+          if(meta.data[0]){
+            const pt=meta.data[0];
+            ctx.save();
+            ctx.fillStyle='rgba(226,232,240,0.85)';
+            ctx.font='500 9.5px Syne';
+            ctx.textAlign='center';
+            ctx.fillText(ds.label,pt.x,pt.y-pt.options.radius-4);
+            ctx.restore();
+          }
+        });
+      }
+    }]
+  });
+
+  // Scorecard table
+  const sc=[
+    {n:'Versace',p:34.8,s:4826,rev:3.54,rpl:177131,ms:13.73,vel:61.5,eff:78.9,role:'VOLUME KING'},
+    {n:'Calvin Klein',p:25.7,s:5740,rev:2.49,rpl:146600,ms:9.66,vel:73.1,eff:65.3,role:'VOLUME KING'},
+    {n:'Azzaro',p:42.8,s:2554,rev:1.67,rpl:111539,ms:6.48,vel:32.5,eff:49.7,role:'STAR'},
+    {n:'Davidoff',p:26.8,s:7849,rev:1.57,rpl:224425,ms:6.09,vel:100,eff:100,role:'CHAMPION'},
+    {n:'Paco Rabanne',p:58.6,s:480,rev:0.97,rpl:21619,ms:3.77,vel:6.1,eff:9.6,role:'STAR'},
+    {n:'YSL',p:69.1,s:410,rev:0.93,rpl:30938,ms:3.60,vel:5.2,eff:13.8,role:'PREMIUM'},
+    {n:'Armaf',p:40.0,s:714,rev:0.88,rpl:25757,ms:3.39,vel:9.1,eff:11.5,role:'VALUE'},
+    {n:'Ralph Lauren',p:37.8,s:409,rev:0.75,rpl:18367,ms:2.92,vel:5.2,eff:8.2,role:'DEFEND'},
+    {n:'D&G',p:60.3,s:386,rev:0.66,rpl:20677,ms:2.56,vel:4.9,eff:9.2,role:'PREMIUM'},
+    {n:'Kenneth Cole',p:22.2,s:3388,rev:0.58,rpl:82547,ms:2.24,vel:43.2,eff:36.8,role:'OPPORTUNITY'},
+    {n:'Burberry',p:39.8,s:1607,rev:0.57,rpl:47866,ms:2.23,vel:20.5,eff:21.3,role:'GROW'},
+    {n:'C. Herrera',p:56.3,s:705,rev:0.57,rpl:38287,ms:2.23,vel:9.0,eff:17.1,role:'STAR'},
+    {n:'Montblanc',p:42.9,s:2159,rev:0.55,rpl:90950,ms:2.11,vel:27.5,eff:40.5,role:'OPPORTUNITY'},
+    {n:'Armani',p:56.9,s:173,rev:0.54,rpl:8939,ms:2.08,vel:2.2,eff:4.0,role:'REVIEW'},
+    {n:'Liz Claiborne',p:21.2,s:3049,rev:0.49,rpl:69650,ms:1.89,vel:38.8,eff:31.0,role:'OPPORTUNITY'},
+  ];
+  const roleColor={
+    'VOLUME KING':'tag-v','STAR':'tag-p','CHAMPION':'tag-s','PREMIUM':'tag-n',
+    'VALUE':'tag-n','DEFEND':'tag-w','OPPORTUNITY':'tag-s','GROW':'tag-v','REVIEW':'tag-w'
+  };
+  let html=`<thead><tr>
+    <th>Brand</th><th>Avg $</th><th>Avg Sold</th><th>Revenue</th>
+    <th>Rev/Listing</th><th>Mkt Share</th><th>Velocity</th><th>Efficiency</th><th>Role</th>
+  </tr></thead><tbody>`;
+  sc.forEach(r=>{
+    html+=`<tr>
+      <td><b>${r.n}</b></td>
+      <td>$${r.p}</td>
+      <td>${r.s.toLocaleString()}</td>
+      <td style="color:var(--green)">$${r.rev}M</td>
+      <td>$${(r.rpl/1000).toFixed(0)}K</td>
+      <td>${r.ms}%</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="sc-bar-wrap"><div class="sc-bar" style="width:${r.vel}%;background:${r.vel>50?C.green:r.vel>25?C.gold:C.muted}"></div></div>
+          <span style="font-size:11px">${r.vel}</span>
+        </div>
+      </td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="sc-bar-wrap"><div class="sc-bar" style="width:${r.eff}%;background:${r.eff>50?C.blue2:r.eff>25?C.purple:C.muted}"></div></div>
+          <span style="font-size:11px">${r.eff}</span>
+        </div>
+      </td>
+      <td><span class="tag ${roleColor[r.role]}">${r.role}</span></td>
+    </tr>`;
+  });
+  html+='</tbody>';
+  document.getElementById('scorecardTable').innerHTML=html;
+
+  // Bubble chart
+  const bubBrands=[
+    {n:'Versace',p:34.8,s:4826,r:3.54},{n:'Calvin Klein',p:25.7,s:5740,r:2.49},
+    {n:'Azzaro',p:42.8,s:2554,r:1.67},{n:'Davidoff',p:26.8,s:7849,r:1.57},
+    {n:'Paco Rabanne',p:58.6,s:480,r:0.97},{n:'YSL',p:69.1,s:410,r:0.93},
+    {n:'Armaf',p:40.0,s:714,r:0.88},{n:'Ralph Lauren',p:37.8,s:409,r:0.75},
+    {n:'Montblanc',p:42.9,s:2159,r:0.55},{n:'Burberry',p:39.8,s:1607,r:0.57},
+    {n:'C. Herrera',p:56.3,s:705,r:0.57},{n:'HUGO BOSS',p:42.8,s:1948,r:0.48},
+    {n:'Creed',p:93.1,s:221,r:0.32},{n:'Armani',p:56.9,s:173,r:0.54},
+    {n:'Gucci',p:56.9,s:675,r:0.35},
+  ];
+  new Chart(document.getElementById('bubbleChart'),{
+    type:'bubble',
+    data:{
+      datasets:bubBrands.map((b,i)=>({
+        label:b.n,
+        data:[{x:b.p,y:b.s,r:Math.max(6,b.r*18)}],
+        backgroundColor:a(PAL[i%PAL.length],0.65),
+        borderColor:PAL[i%PAL.length],borderWidth:1.5,
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`  ${ctx.dataset.label} — $${ctx.parsed.x} · ${ctx.parsed.y.toLocaleString()} sold`}}
+      },
+      scales:{
+        x:{grid:GRID,title:{display:true,text:'Avg Price (USD)',font:{size:10}},ticks:{callback:v=>'$'+v}},
+        y:{grid:GRID,title:{display:true,text:'Avg Units Sold',font:{size:10}},ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}}
+      }
+    },
+    plugins:[{
+      id:'bub-labels',
+      afterDraw(chart){
+        chart.data.datasets.forEach((ds,i)=>{
+          const meta=chart.getDatasetMeta(i);
+          if(meta.data[0]){
+            const pt=meta.data[0];
+            const ctx=chart.ctx;
+            ctx.save();
+            ctx.fillStyle='rgba(148,163,184,0.9)';
+            ctx.font='500 9px Syne';ctx.textAlign='center';
+            ctx.fillText(ds.label,pt.x,pt.y-pt.options.radius-3);
+            ctx.restore();
+          }
+        });
+      }
+    }]
+  });
+
+  // Price range chart
+  const prBrands=['Creed','YSL','D&G','Paco Rabanne','Armani','Armaf','PRADA','Burberry','Ralph Lauren','Calvin Klein'];
+  const prMin=[9.96,9.89,18.89,11.95,15.99,19.41,8.88,7.95,12.99,17.99];
+  const prMax=[259.09,178.99,239.99,140,192,125,181.04,77.07,89.25,40.60];
+  new Chart(document.getElementById('priceRangeChart'),{
+    type:'bar',
+    data:{
+      labels:prBrands,
+      datasets:[
+        {label:'Min Price',data:prMin,backgroundColor:a(C.muted,0.5),borderRadius:4,borderSkipped:false},
+        {label:'Price Range',data:prMax.map((mx,i)=>mx-prMin[i]),backgroundColor:PAL.map(c=>a(c,0.75)),borderRadius:[0,4,4,0],borderSkipped:false},
+      ]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:ctx=>ctx.datasetIndex===0?`  Min: $${ctx.raw}`:`  Range: $${(prMin[ctx.dataIndex]+ctx.raw).toFixed(0)} max`
+      }}},
+      scales:{
+        x:{grid:GRID,stacked:true,ticks:{callback:v=>'$'+v}},
+        y:{grid:{display:false},stacked:true,ticks:{font:{size:10}}}
+      }
+    }
+  });
+
+  // Rev per listing
+  const rplBrands=['Davidoff','Versace','Montblanc','HUGO BOSS','Liz Claiborne','Kenneth Cole','Burberry','C. Herrera','Azzaro','Calvin Klein'];
+  const rplVals=[224.4,177.1,91.0,95.9,69.7,82.5,47.9,38.3,111.5,146.6];
+  new Chart(document.getElementById('revPerListingChart'),{
+    type:'bar',
+    data:{
+      labels:rplBrands,
+      datasets:[{
+        data:rplVals,
+        backgroundColor:rplVals.map(v=>a(v>100?C.green:v>50?C.gold:C.blue,0.8)),
+        borderRadius:6,borderSkipped:false,
+      }]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`  $${ctx.raw}K per listing`}}},
+      scales:{
+        x:{grid:GRID,ticks:{callback:v=>'$'+v+'K'}},
+        y:{grid:{display:false},ticks:{font:{size:10}}}
+      }
+    }
+  });
+}
+
+/* ─── PAGE 3 CHARTS ──────────────────────────────────── */
+function renderMarketCharts(){
+  marketRendered=true;
+
+  // Competition density grouped bar
+  const tiers=['Budget\n<$25','Value\n$25-50','Mid\n$50-80','Premium\n$80-120','Luxury\n$120+'];
+  new Chart(document.getElementById('densityChart'),{
+    type:'bar',
+    data:{
+      labels:tiers,
+      datasets:[
+        {label:'# Brands',data:[135,124,72,38,29],backgroundColor:a(C.blue,0.8),borderRadius:4},
+        {label:'# Listings',data:[291,402,173,88,46],backgroundColor:a(C.teal,0.6),borderRadius:4},
+        {label:'Avg Sold (÷10)',data:[90.8,99.1,47.0,19.7,7.8],backgroundColor:a(C.gold,0.7),borderRadius:4},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:10},padding:10,boxWidth:10,boxHeight:10}}},
+      scales:{x:{grid:{display:false}},y:{grid:GRID}}
+    }
+  });
+
+  // Elasticity grouped bar
+  const etLabels=['Budget\n<$25','Value\n$25-50','Mid\n$50-80','Premium\n$80-120','Luxury\n$120+'];
+  new Chart(document.getElementById('elasticityChart'),{
+    type:'bar',
+    data:{
+      labels:etLabels,
+      datasets:[
+        {label:'EDT',data:[1269,1460,858,307,51],backgroundColor:a(C.blue,0.85),borderRadius:4},
+        {label:'EDP',data:[148,234,195,183,90],backgroundColor:a(C.gold,0.8),borderRadius:4},
+        {label:'EDC',data:[893,583,148,45,14],backgroundColor:a(C.teal,0.75),borderRadius:4},
+        {label:'Other',data:[1797,122,61,30,17],backgroundColor:a(C.purple,0.7),borderRadius:4},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:10},padding:8,boxWidth:10,boxHeight:10}}},
+      scales:{x:{grid:{display:false}},y:{grid:GRID,ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}}}
+    }
+  });
+
+  // Geographic imbalance
+  const states=['New Jersey','Texas','Michigan','New York','Florida','California','Georgia'];
+  const revPerL=[91.0,33.0,6.3,2.6,5.2,2.4,9.7];
+  new Chart(document.getElementById('geoImbalanceChart'),{
+    type:'bar',
+    data:{
+      labels:states,
+      datasets:[{
+        label:'Revenue per Listing ($K)',
+        data:revPerL,
+        backgroundColor:revPerL.map(v=>a(v>50?C.green:v>10?C.gold:C.blue,0.8)),
+        borderRadius:6,borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`  $${ctx.raw}K / listing`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10}}},
+        y:{grid:GRID,ticks:{callback:v=>'$'+v+'K'}}
+      }
+    }
+  });
+
+  // Keywords
+  const kws=['tester','new','3.4 oz','mini','6.7 oz','gift','set','spray','sample','sealed','100ml','50ml'];
+  const kwSold=[2159,1095,1197,1113,975,718,352,220,213,141,87,98];
+  new Chart(document.getElementById('keywordChart'),{
+    type:'bar',
+    data:{
+      labels:kws,
+      datasets:[{
+        data:kwSold,
+        backgroundColor:kwSold.map(v=>a(v>1000?C.green:v>500?C.gold:v>200?C.blue:C.muted,0.8)),
+        borderRadius:6,borderSkipped:false,
+      }]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`  Avg ${ctx.raw.toLocaleString()} units sold`}}},
+      scales:{
+        x:{grid:GRID,ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}},
+        y:{grid:{display:false},ticks:{font:{size:10}}}
+      }
+    }
+  });
+
+  // Top listings table
+  const topL=[
+    {b:'Azzaro',t:'Chrome 6.7oz EDT New In Box',p:46.33,s:30655,r:1420246,st:'New Jersey'},
+    {b:'Calvin Klein',t:'CK One 3.4oz Unisex New In Box',p:23.89,s:54052,r:1291302,st:'New Jersey'},
+    {b:'Versace',t:'Eros 3.4oz EDT Tester',p:39.77,s:31718,r:1261424,st:'New Jersey'},
+    {b:'Davidoff',t:'Cool Water 4.2oz EDT New In Box',p:25.23,s:40130,r:1012479,st:'New Jersey'},
+    {b:'Versace',t:'Pour Homme 3.4oz EDT New Tester',p:44.94,s:21310,r:957671,st:'New Jersey'},
+    {b:'Versace',t:'Pour Homme 3.4oz EDT New Tester',p:36.88,s:19899,r:733875,st:'New Jersey'},
+    {b:'Calvin Klein',t:'OBSESSION 4.0oz EDT New In Box',p:23.56,s:24048,r:566570,st:'Texas'},
+    {b:'Davidoff',t:'Cool Water 6.7oz EDT Brand New',p:38.24,s:13549,r:518113,st:'New Jersey'},
+    {b:'Paco Rabanne',t:'1 Million 3.4oz EDT New Tester',p:47.99,s:8877,r:426007,st:'New Jersey'},
+    {b:'HUGO BOSS',t:'Hugo 6.7oz EDT Brand New',p:50.79,s:7506,r:381229,st:'New Jersey'},
+  ];
+  let th=`<thead><tr><th>#</th><th>Brand</th><th>Product</th><th>Price</th><th>Units Sold</th><th>Est. Revenue</th><th>Location</th></tr></thead><tbody>`;
+  topL.forEach((r,i)=>{
+    th+=`<tr>
+      <td><b style="color:var(--gold)">${i+1}</b></td>
+      <td><b>${r.b}</b></td>
+      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted2)">${r.t}</td>
+      <td>$${r.p}</td>
+      <td style="color:var(--green)">${r.s.toLocaleString()}</td>
+      <td style="color:var(--blue2);font-weight:600">$${(r.r/1e6).toFixed(2)}M</td>
+      <td><span style="font-size:10px;padding:2px 7px;background:rgba(212,169,75,0.1);color:var(--gold);border-radius:6px">${r.st}</span></td>
+    </tr>`;
+  });
+  document.getElementById('topListingsTable').innerHTML=th+'</tbody>';
+}
+
+/* ─── PAGE 4 CHARTS ──────────────────────────────────── */
+function renderOppsCharts(){
+  oppsRendered=true;
+
+  // Stars chart
+  const starBrands=['Azzaro','Paco Rabanne','YSL','C.Herrera','D&G','Gucci','Montblanc','HUGO BOSS'];
+  const starPrice=[42.8,58.6,69.1,56.3,60.3,56.9,42.9,42.8];
+  const starSold=[2554,480,410,705,386,675,2159,1948];
+  new Chart(document.getElementById('starsChart'),{
+    type:'scatter',
+    data:{
+      datasets:starBrands.map((b,i)=>({
+        label:b,
+        data:[{x:starPrice[i],y:starSold[i]}],
+        backgroundColor:a(PAL[i],0.75),
+        borderColor:PAL[i],
+        borderWidth:2,
+        pointRadius:10,
+        pointHoverRadius:13,
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`  ${ctx.dataset.label}: $${ctx.parsed.x} · ${ctx.parsed.y.toLocaleString()} sold`}}
+      },
+      scales:{
+        x:{grid:GRID,title:{display:true,text:'Avg Price (USD)',font:{size:10}},ticks:{callback:v=>'$'+v},min:35,max:80},
+        y:{grid:GRID,title:{display:true,text:'Avg Units Sold',font:{size:10}},ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}}
+      }
+    },
+    plugins:[{
+      id:'star-labels',
+      afterDraw(chart){
+        chart.data.datasets.forEach((ds,i)=>{
+          const meta=chart.getDatasetMeta(i);
+          if(meta.data[0]){
+            const pt=meta.data[0];
+            const ctx=chart.ctx;
+            ctx.save();
+            ctx.fillStyle='rgba(226,232,240,0.85)';
+            ctx.font='500 9.5px Syne';ctx.textAlign='center';
+            ctx.fillText(ds.label,pt.x,pt.y-14);
+            ctx.restore();
+          }
+        });
+      }
+    }]
+  });
+
+  // Opportunity composite score
+  const oppB=['Davidoff','Calvin Klein','Versace','Azzaro','Montblanc','Kenneth Cole','HUGO BOSS','Burberry','Liz Claiborne','C. Herrera'];
+  const oppS=[86,79,76,65,57,52,49,43,41,38];
+  new Chart(document.getElementById('oppScoreChart'),{
+    type:'bar',
+    data:{
+      labels:oppB,
+      datasets:[{
+        label:'Opportunity Score',
+        data:oppS,
+        backgroundColor:oppS.map(v=>a(v>70?C.green:v>55?C.gold:C.blue,0.8)),
+        borderRadius:6,borderSkipped:false,
+      }]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`  Score: ${ctx.raw}/100`}}
+      },
+      scales:{
+        x:{grid:GRID,max:100,ticks:{callback:v=>v+'/100'}},
+        y:{grid:{display:false},ticks:{font:{size:10}}}
+      }
+    }
+  });
+}
+
+// Render exec page charts on load (already visible)
+// All page 1 charts are rendered inline above
+</script>
+</body>
+</html>
